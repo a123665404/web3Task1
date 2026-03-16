@@ -64,6 +64,22 @@ func main() {
 	target := 26
 	result1 := twoSum(nums1, target)
 	fmt.Println("题目8：", result1)
+
+	//题目9
+	fmt.Println("题目9：", climbStairs(10))
+
+	//题目10
+	fmt.Println("题目10：", maxSubArray([]int{-2, 1, -3, 4, -1, 2, 1, -5, 4}))
+
+	//题目11
+	head := &ListNode{Val: 1, Next: &ListNode{Val: 2, Next: &ListNode{Val: 3, Next: &ListNode{Val: 4, Next: &ListNode{Val: 5}}}}}
+	reversed := reverseList(head)
+	fmt.Print("题目11：")
+	for reversed != nil {
+		fmt.Print(reversed.Val, " ")
+		reversed = reversed.Next
+	}
+	fmt.Println()
 }
 
 // region题目1：给你一个 非严格递增排列 的数组 nums ，请你 原地 删除重复出现的元素，使每个元素 只出现一次 ，返回删除后数组的新长度。元素的 相对顺序 应该保持 一致 。然后返回 nums 中唯一元素的个数。
@@ -479,6 +495,91 @@ func twoSum(nums []int, target int) []int {
 	}
 	// 如果遍历完数组后没有找到符合条件的两个数，返回空切片
 	return []int{}
+}
+
+//endregion
+
+//----------------------------------------------------------------------
+
+//region题目9：假设你正在爬楼梯。需要 n 阶你才能到达楼顶。每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+
+// 输入：n = 10
+// 输出：89
+
+// climbStairs 使用动态规划计算爬楼梯的方案数。
+// 思路：到达第 i 阶的方法数等于到达第 i-1 阶和第 i-2 阶的方法数之和（类似斐波那契数列）。
+func climbStairs(n int) int {
+	if n <= 2 {
+		return n
+	}
+	// prev2 表示到达第 i-2 阶的方法数，prev1 表示到达第 i-1 阶的方法数
+	prev2, prev1 := 1, 2
+	for i := 3; i <= n; i++ {
+		prev2, prev1 = prev1, prev1+prev2
+	}
+	return prev1
+}
+
+//endregion
+
+//----------------------------------------------------------------------
+
+//region题目10：给你一个整数数组 nums ，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+
+// 输入：nums = [-2,1,-3,4,-1,2,1,-5,4]
+// 输出：6
+// 解释：连续子数组 [4,-1,2,1] 的和最大，为 6。
+
+// maxSubArray 使用 Kadane 算法求最大子数组和。
+// 思路：遍历数组，维护当前子数组的和 currentSum。若 currentSum 加上当前元素比当前元素本身还小，
+// 则从当前元素重新开始；同时记录遇到的最大和 maxSum。
+func maxSubArray(nums []int) int {
+	if len(nums) == 0 {
+		return 0
+	}
+	maxSum := nums[0]
+	currentSum := nums[0]
+	for i := 1; i < len(nums); i++ {
+		// 如果当前累积和为负，则从当前元素重新开始
+		if currentSum < 0 {
+			currentSum = nums[i]
+		} else {
+			currentSum += nums[i]
+		}
+		if currentSum > maxSum {
+			maxSum = currentSum
+		}
+	}
+	return maxSum
+}
+
+//endregion
+
+//----------------------------------------------------------------------
+
+//region题目11：给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+
+// 输入：head = [1,2,3,4,5]
+// 输出：[5,4,3,2,1]
+
+// ListNode 定义单链表节点
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// reverseList 反转单链表。
+// 思路：迭代法，使用 prev 和 curr 两个指针逐步将每个节点的 Next 指向前一个节点。
+func reverseList(head *ListNode) *ListNode {
+	var prev *ListNode
+	curr := head
+	for curr != nil {
+		next := curr.Next // 保存下一个节点
+		curr.Next = prev  // 将当前节点指向前一个节点
+		prev = curr       // 前移 prev
+		curr = next       // 前移 curr
+	}
+	return prev
 }
 
 //endregion
