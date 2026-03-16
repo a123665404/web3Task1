@@ -9,6 +9,9 @@ import (
 
 func main() {
 
+	//自我介绍
+	selfIntroduction()
+
 	//题目1
 	nums := []int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}
 	fmt.Println("题目1：", removeDuplicates(nums))
@@ -460,6 +463,17 @@ func hasCommonPrefix(strs []string, length int) bool {
 //region题目8：给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。
 
 //你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。 你可以按任意顺序返回答案。
+
+// selfIntroduction 打印开发者的自我介绍信息。
+func selfIntroduction() {
+	fmt.Println("========== 自我介绍 ==========")
+	fmt.Println("姓名：张军辉（zhangjh）")
+	fmt.Println("GitHub：a123665404")
+	fmt.Println("邮箱：2244819892@qq.com")
+	fmt.Println("简介：热爱编程，专注于 Web3 及区块链技术，熟悉 Go 语言开发，对算法与数据结构有浓厚兴趣。")
+	fmt.Println("==============================")
+	fmt.Println()
+}
 
 // twoSum 函数旨在找出数组中两个数之和等于特定目标值的那两个数的索引。
 // 它通过两层循环遍历数组中的每个元素，并检查其他元素是否能与当前元素相加得到目标值。
